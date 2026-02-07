@@ -1,5 +1,5 @@
-def registry = 'https://taxiapp1.jfrog.io/artifactory'
-def imageName = 'taxiapp1.jfrog.io/taxiapp1-docker-local/taxiapp'
+def registry = 'https://taxiappj7.jfrog.io/artifactory'
+def imageName = 'taxiappj7.jfrog.io/taxiapp-docker-local/taxiapp'
 def version   = '1.0.1'
 pipeline {
     agent {
@@ -33,8 +33,8 @@ environment {
                     // Run SonarQube analysis
                     sh """
                     mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-                    -Dsonar.projectKey=taxi-app1234_taxi \
-                    -Dsonar.organization=taxi-app1234 \
+                    -Dsonar.projectKey=taxi-app00_taxi-appp \
+                    -Dsonar.organization=taxi-app00 \
                     -Dsonar.host.url=https://sonarcloud.io \
                     -Dsonar.token=${SONAR_TOKEN}
                     """
@@ -51,7 +51,7 @@ environment {
                           "files": [
                             {
                               "pattern": "/home/ubuntu/jenkins/workspace/taxi-booking/taxi-booking/target/(*)",
-                              "target": "taxiapp1-libs-release-local/{1}",
+                              "target": "taxiapp-libs-release-local/{1}",
                               "flat": "false",
                               "props" : "${properties}",
                               "exclusions": [ "*.sha1", "*.md5"]
@@ -69,7 +69,7 @@ environment {
       steps {
         script {
            echo '<--------------- Docker Build Started --------------->'
-           app = docker.build(imageName+":"+version)
+           app = docker.build("${imageName}:${version}")
            echo '<--------------- Docker Build Ends --------------->'
         }
       }
